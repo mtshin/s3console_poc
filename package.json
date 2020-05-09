@@ -1,0 +1,24 @@
+{
+  "name": "s3console_poc",
+  "version": "1.0.0",
+  "description": "Proof of Concept react app to test s3 operations via aspen",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server-install": "npm install --prefix server",
+    "client-install": "npm install --prefix client",
+    "install-all": "concurrently \"npm run server-install \" \"npm run client-install\"",
+    "server": "cd server && nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mtshin/s3console_poc.git"
+  },
+  "author": "Matthew Shin",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.3"
+  }
+}
