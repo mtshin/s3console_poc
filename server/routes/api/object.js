@@ -23,7 +23,7 @@ const s3 = new aws.S3({
   s3ForcePathStyle: true, // needed with minio? -> from minio docs
   sslEnabled: false,
   rejectUnauthorized: false,
-  signatureVersion: "v4",
+  signatureVersion: "v4"
 });
 
 /**
@@ -42,8 +42,8 @@ const putObject = multer({
           Date.now() +
           path.extname(file.originalname)
       );
-    },
-  }),
+    }
+  })
   // limits: { fileSize: 5000000 }, // In bytes, 5 MB.
 }).single("object");
 
@@ -54,14 +54,11 @@ const putObject = multer({
  */
 router.post("/putObject", (req, res) => {
   putObject(req, res, (error) => {
-    // console.log( 'error', error );
     if (error) {
-      console.log("errors", error);
       res.json({ error: error });
     } else {
       // If File not found
       if (req.file === undefined) {
-        console.log("Error: No File Selected!");
         res.json("Error: No File Selected");
       } else {
         // If Success
@@ -71,7 +68,7 @@ router.post("/putObject", (req, res) => {
         res.json({
           file: fileName,
           location: fileLocation,
-          bucket: process.env.S3_BUCKET,
+          bucket: process.env.S3_BUCKET
         });
       }
     }
@@ -94,8 +91,8 @@ const putObjects = multer({
           Date.now() +
           path.extname(file.originalname)
       );
-    },
-  }),
+    }
+  })
   // limits: { fileSize: 5000000 }, // In bytes, 5 MB.
 }).array("objects", 5);
 /**
@@ -105,14 +102,11 @@ const putObjects = multer({
  */
 router.post("/putObjects", (req, res) => {
   putObjects(req, res, (error) => {
-    console.log("files", req.files);
     if (error) {
-      console.log("errors", error);
       res.json({ error: error });
     } else {
       // If File not found
       if (req.files === undefined) {
-        console.log("Error: No File Selected!");
         res.json("Error: No File Selected");
       } else {
         // If Success
@@ -121,14 +115,13 @@ router.post("/putObjects", (req, res) => {
         const fileLocationArray = [];
         for (let i = 0; i < fileArray.length; i++) {
           fileLocation = fileArray[i].location;
-          console.log("filename", fileLocation);
           fileLocationArray.push(fileLocation);
         }
         // Save the file information for components
         res.json({
           filesArray: fileArray,
           locationArray: fileLocationArray,
-          bucket: process.env.S3_BUCKET,
+          bucket: process.env.S3_BUCKET
         });
       }
     }
@@ -143,20 +136,18 @@ router.post("/putObjects", (req, res) => {
 router.get("/getObject/:id", (req, res) => {
   const params = {
     Bucket: process.env.S3_BUCKET,
-    Key: req.params.id,
+    Key: req.params.id
   };
 
   s3.getObject(params)
     .createReadStream()
     .on("error", (error) => {
-      console.log(error.statusCode);
-      console.log(error.message);
       res.status(error.statusCode).send({
         error: {
           status: error.statusCode,
           code: error.code,
-          message: error.message,
-        },
+          message: error.message
+        }
       });
     })
     .pipe(res)
@@ -164,6 +155,62 @@ router.get("/getObject/:id", (req, res) => {
       console.log(`GET request for ${params.Key} exited`);
     });
 });
+
+router.post("/deleteObject/:id", (req, res) => {
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    Key: req.params.id
+  };
+
+  s3.deleteObject(params)
+    .createReadStream()
+    .on("error", (error) => {
+      res.status(error.statusCode).send({
+        error: {
+          status: error.statusCode,
+          code: error.code,
+          message: error.message
+        }
+      });
+    })
+    .pipe(res)
+    .on("finish", () => {
+      console.log(`DELETE request for ${params.Key} exited`);
+    });
+});
+
+/**
+ * @route GET api/object/listObjects
+ * @desc List files in the bucket
+ * @access public
+ */
+router.get("/listObjects", async (req, res) => {
+  const param = {
+    Bucket: process.env.S3_BUCKET
+  };
+
+  try {
+    const allObjects = await getObjectListing(param);
+    res.send(allObjects);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+// Rescursively get a list of all objects in a bucket with consecutive asynchronous listObjects call (needed for buckets > 1000 objects).
+const getObjectListing = async (param) => {
+  const data = await s3.listObjectsV2(param).promise();
+  let output = data.Contents === undefined ? [] : data.Contents;
+  if (!data.IsTruncated) {
+    // Exit condition when object listing is no longer truncated (last page)
+    return output;
+  } else {
+    // Recurse if data is truncated
+    param.ContinuationToken = data.NextContinuationToken;
+    const nextListing = await getObjectListing(param);
+    return output.concat(nextListing);
+  }
+};
 
 // Export the router so that server.js can pick it up
 module.exports = router;

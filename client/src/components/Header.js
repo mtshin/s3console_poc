@@ -6,7 +6,7 @@ const Header = () => {
     <AppBar color="primary" position="static">
       <Toolbar>
         <Typography variant="h6" color="inherit">
-          Hitachi Vantara
+          Matthew Shin
         </Typography>
       </Toolbar>
     </AppBar>

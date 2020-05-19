@@ -4,9 +4,7 @@ import S3OperationsGrid from "./s3Operations/S3OperationsGrid";
 const Home = () => {
   return (
     <div>
-      <div className="container">
-        <S3OperationsGrid />
-      </div>
+      <S3OperationsGrid />
     </div>
   );
 };

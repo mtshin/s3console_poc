@@ -21,7 +21,7 @@ ReactDOM.render(
     )}
     anchorOrigin={{
       vertical: "bottom",
-      horizontal: "right",
+      horizontal: "right"
     }}
     maxSnack={5}
   >

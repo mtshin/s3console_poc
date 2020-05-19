@@ -4,11 +4,11 @@ import GitHubIcon from "@material-ui/icons/GitHub";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: "25px",
+    padding: "25px"
   },
   clickableIcon: {
-    cursor: "pointer",
-  },
+    cursor: "pointer"
+  }
 }));
 
 const Title = () => {
@@ -21,14 +21,13 @@ const Title = () => {
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
         A proof of concept react app to test aws sdk integration for javascript
-        with Aspen
       </Typography>
       <GitHubIcon
         className={classes.clickableIcon}
         target="_blank"
         rel="noopener noreferrer"
         onClick={(event) =>
-          window.open("http://gitlab.wal.hds.com/mshin/s3console_poc", "_blank")
+          window.open("https://github.com/mtshin/s3console_poc", "_blank")
         }
       />
     </div>
