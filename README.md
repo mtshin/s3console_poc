@@ -1,5 +1,7 @@
 # s3console_poc
 
+![readme_screenshot](./client/public/readme_screenshot.png)
+
 ## Description
 
 A proof of concept react app written in typescript that utilizes [aws sdk for javascript](https://docs.aws.amazon.com/sdk-for-javascript/index.html) to perform basic s3 calls within a react app to a running Aspen instance.
