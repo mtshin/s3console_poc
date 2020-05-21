@@ -121,7 +121,7 @@ const ListFiles = () => {
             }
           ]}
           data={tableData}
-          title="Demo Title"
+          title=""
           actions={[
             {
               icon: "refresh",

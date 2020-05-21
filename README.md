@@ -1,6 +1,6 @@
 # s3console_poc
 
-![readme_screenshot](./client/public/readme_screenshot.png)
+![readme_screenshot](./client/public/readme_demo.gif)
 
 ## Description
 
