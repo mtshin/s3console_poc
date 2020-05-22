@@ -9,7 +9,9 @@ A proof of concept react app written in typescript that utilizes [aws sdk for ja
 ## Operations
 
 - PUT - Able to put file(s) into a bucket as individual objects (hardcoded arbitrary limit of 5 files)
-- GET - Download a file by its object name in a bucket
+- LIST - Recursively calls list object to list all objects in a bucket to the table
+- GET - Download a file by clicking the save icon in the table
+- DELETE - Delete object by clicking the trash icon in the table
 
 ## Requirements
 
