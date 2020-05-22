@@ -4,7 +4,7 @@
 
 ## Description
 
-A proof of concept react app written in typescript that utilizes [aws sdk for javascript](https://docs.aws.amazon.com/sdk-for-javascript/index.html) to perform basic s3 calls within a react app to a running Aspen instance.
+A proof of concept react app written in typescript that utilizes [aws sdk for javascript](https://docs.aws.amazon.com/sdk-for-javascript/index.html) to perform basic s3 calls within a react app to an S3 server.
 
 ## Operations
 
