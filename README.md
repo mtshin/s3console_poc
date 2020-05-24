@@ -16,7 +16,6 @@ A proof of concept react app written in typescript that utilizes [aws sdk for ja
 ## Requirements
 
 - [nodejs](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions-enterprise-linux-fedora-and-snap-packages)
-- [nvm](https://github.com/nvm-sh/nvm#install--update-script) - optional but is convenient to have to easily update/switch node versions on the fly
 
 ## Installation
 
